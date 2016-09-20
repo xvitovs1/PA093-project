@@ -1,3 +1,8 @@
+import g4p_controls.*;
+
+GButton btnHelp;
+GWindow window;
+
 boolean addPoints; // adding points mode
 boolean removePoints; // removing points mode
 boolean movePoint; // moving points mode
@@ -33,6 +38,7 @@ void setup() {
   size(840, 480);
   background(255);
   points = new ArrayList<Point>();
+  btnHelp = new GButton(this, 10, 10, 140, 20, "Help");
 }
 
 void draw(){
@@ -98,31 +104,62 @@ void redrawPoints(){
   }
 }
 
-void keyPressed() {
-  switch (key) {
-    case('c') : clear();
-                background(255);
-                break;
-    case('a') : addPoints = true;
-                removePoints = false;
-                movePoint = false;
-                break;
-    case('d') : addPoints = false;
-                removePoints = true;
-                movePoint = false;
-                break;
-    case('r') : randomPoints(RANDOM_POINTS_NUM);
-                break;
-    case('m') : movePoint = true;
-                addPoints = false;
-                removePoints = false;
-  }
-
-}
-
 // Draw random points
 void randomPoints(int count) {
   for(int i = 0; i < count; i++) {
         addPoint(random(width), random(height));
   }
+}
+
+void keyPressed() {
+  switch (key) {
+    case('c') : clear();
+                background(255);
+                break;
+    case('a') : setMode(true, false, false);
+                break;
+    case('d') : setMode(false,true, false);
+                break;
+    case('r') : randomPoints(RANDOM_POINTS_NUM);
+                break;
+    case('m') : setMode(false,false, true);
+                break;
+  }
+
+}
+
+void setMode(boolean add, boolean remove, boolean move){
+  addPoints = add;
+  removePoints = remove;
+  movePoint = move;
+}
+
+void handleButtonEvents(GButton button, GEvent event) {
+  if(event == GEvent.CLICKED && button == btnHelp) {
+    createWindow();
+    btnHelp.setEnabled(false);
+  }
+}
+
+synchronized public void window_draw(PApplet appc, GWinData data) { 
+  appc.background(255); 
+  appc.fill(0);
+  appc.text("Help", 10,30);
+  appc.text("---------------------", 10,40);
+  appc.text("Adding points....................a", 10,60);
+  appc.text("Removing points...............d", 10,80);
+  appc.text("Move points......................m", 10,100);
+  appc.text("Generate random points....r", 10,120);
+  appc.text("Clear screen......................c", 10,140);
+} 
+ 
+void createWindow() {
+  window = GWindow.getWindow(this, "Help", 500, 50, 200,180, JAVA2D);
+  window.addDrawHandler(this, "window_draw");
+  window.addOnCloseHandler(this, "windowClosing");
+  window.setActionOnClose(GWindow.CLOSE_WINDOW);
+}// createWindow
+ 
+public void windowClosing(PApplet w, GWinData data){
+  btnHelp.setEnabled(true);
 }
