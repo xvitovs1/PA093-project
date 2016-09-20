@@ -4,6 +4,9 @@ boolean movePoint;
 ArrayList<Point> points;
 Point dragPoint = null;
 
+// Point radius
+static final int POINT_RADIUS = 5;
+
 class Point {
   float x;
   float y;
@@ -64,7 +67,7 @@ void mouseDragged() {
 
 
 void addPoint(float x, float y){
-  Point p = new Point(x, y, 10);
+  Point p = new Point(x, y, POINT_RADIUS);
   points.add(p);
   fill(0);
   ellipse(p.x, p.y, p.radius * 2, p.radius * 2);
