@@ -1,11 +1,13 @@
-boolean addPoints;
-boolean removePoints;
-boolean movePoint;
+boolean addPoints; // adding points mode
+boolean removePoints; // removing points mode
+boolean movePoint; // moving points mode
 ArrayList<Point> points;
 Point dragPoint = null;
 
 // Point radius
 static final int POINT_RADIUS = 5;
+// Number of random points
+static final int RANDOM_POINTS_NUM = 10;
 
 class Point {
   float x;
@@ -18,7 +20,7 @@ class Point {
     this.radius = radius;
   }
   
-  // Check if given point is inside our ellipse point
+  // Check if given point is inside our ellipse
   boolean contains(float x, float y) {
     if((Math.pow((x - this.x),2) + Math.pow((y - this.y),2)) <= Math.pow(this.radius,2)) {
       return true;
@@ -65,7 +67,7 @@ void mouseDragged() {
   }
 }
 
-
+// Add point
 void addPoint(float x, float y){
   Point p = new Point(x, y, POINT_RADIUS);
   points.add(p);
@@ -73,6 +75,7 @@ void addPoint(float x, float y){
   ellipse(p.x, p.y, p.radius * 2, p.radius * 2);
 }
 
+// Remove point
 void removePoint(float x, float y){
   Point toRemove = null;
   for(Point p : points) {
@@ -85,6 +88,7 @@ void removePoint(float x, float y){
   if(toRemove!=null) points.remove(toRemove);
 }
 
+// Redraw
 void redrawPoints(){
   clear();
   background(255);
@@ -107,7 +111,7 @@ void keyPressed() {
                 removePoints = true;
                 movePoint = false;
                 break;
-    case('r') : randomPoints(10);
+    case('r') : randomPoints(RANDOM_POINTS_NUM);
                 break;
     case('m') : movePoint = true;
                 addPoints = false;
@@ -116,6 +120,7 @@ void keyPressed() {
 
 }
 
+// Draw random points
 void randomPoints(int count) {
   for(int i = 0; i < count; i++) {
         addPoint(random(width), random(height));
