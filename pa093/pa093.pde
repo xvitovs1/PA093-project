@@ -9,30 +9,8 @@ boolean movePoint; // moving points mode
 ArrayList<Point> points;
 Point dragPoint = null;
 
-// Point radius
-static final int POINT_RADIUS = 5;
 // Number of random points
 static final int RANDOM_POINTS_NUM = 10;
-
-class Point {
-  float x;
-  float y;
-  float radius;
-  
-  Point(float x, float y, float radius) {
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
-  }
-  
-  // Check if given point is inside our ellipse
-  boolean contains(float x, float y) {
-    if((Math.pow((x - this.x),2) + Math.pow((y - this.y),2)) <= Math.pow(this.radius,2)) {
-      return true;
-    }
-    return false;
-  }
-}
 
 void setup() {
   size(840, 480);
@@ -75,7 +53,7 @@ void mouseDragged() {
 
 // Add point
 void addPoint(float x, float y){
-  Point p = new Point(x, y, POINT_RADIUS);
+  Point p = new Point(x, y, Point.POINT_RADIUS);
   points.add(p);
   fill(0);
   ellipse(p.x, p.y, p.radius * 2, p.radius * 2);
@@ -111,9 +89,28 @@ void randomPoints(int count) {
   }
 }
 
+void drawConvexHull(){
+  // Get the convex hull
+  if(points.isEmpty()) return;
+  
+  ArrayList<Point> convexHull = ConvexHull.giftWrapping(points);
+  
+  // Draw the convex hull
+  for(int i = 0; i < convexHull.size() - 1; i++){
+    Point p1 = convexHull.get(i);
+    Point p2 = convexHull.get(i + 1);
+    line(p1.x, p1.y, p2.x, p2.y);
+  }
+  
+  Point p1 = convexHull.get(0);
+  Point p2 = convexHull.get(convexHull.size() - 1);
+  line(p1.x, p1.y, p2.x, p2.y);
+}
+
 void keyPressed() {
   switch (key) {
     case('c') : clear();
+                points.clear();
                 background(255);
                 break;
     case('a') : setMode(true, false, false);
@@ -123,6 +120,8 @@ void keyPressed() {
     case('r') : randomPoints(RANDOM_POINTS_NUM);
                 break;
     case('m') : setMode(false,false, true);
+                break;
+    case('h') : drawConvexHull();
                 break;
   }
 
