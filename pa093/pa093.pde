@@ -145,11 +145,12 @@ synchronized public void window_draw(PApplet appc, GWinData data) {
   appc.fill(0);
   appc.text("Help", 10,30);
   appc.text("---------------------", 10,40);
-  appc.text("Adding points....................a", 10,60);
-  appc.text("Removing points...............d", 10,80);
-  appc.text("Move points......................m", 10,100);
-  appc.text("Generate random points....r", 10,120);
-  appc.text("Clear screen......................c", 10,140);
+  appc.text("a ... Adding points", 10,60);
+  appc.text("d ... Removing points", 10,80);
+  appc.text("m ... Move points", 10,100);
+  appc.text("r ... Generate random points", 10,120);
+  appc.text("c ... Clear screen", 10,140);
+  appc.text("h ... Convex Hull - gift wrapping", 10,160);
 } 
  
 void createWindow() {
