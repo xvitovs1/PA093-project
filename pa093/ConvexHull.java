@@ -14,20 +14,18 @@ public class ConvexHull {
         q = p;
       }
     }
-    System.out.println("[" +q.x + "," + q.y+ "]");
-    // Add pivot to convex hull
-    //convexHull.add(q);
-    
-    // Any point on the x-axis
+
+    // Get any point on the x-axis
     Point px = new Point(q.x - 1, q.y, Point.POINT_RADIUS); //p_j-1
     
     Point middlePoint = q;
     Point newPoint = px;
     
+    // Compute convex hull
     while(!newPoint.equals(q)){
       float angle = 360;
       for(Point p : points){
-        if(convexHull.contains(p) || p.equals(middlePoint)){
+        if(p.equals(px) || p.equals(middlePoint)){
           continue;
         }
         
