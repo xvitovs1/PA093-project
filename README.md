@@ -1,4 +1,10 @@
-# PA093-project
+# PA093 Computational Geometry Project 
+
+##Implemented algorithms:
+
+* Convex hull - gift wrapping
+* Convex hull - Graham scan
+
 ##Commands:
 
 * `a` - Add points
