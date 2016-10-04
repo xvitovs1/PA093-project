@@ -1,7 +1,10 @@
 import java.util.ArrayList;
-import processing.core.PVector;
+import java.util.Stack;
+import java.util.Collections;
 
 public class ConvexHull {
+  
+  // Gift Wrapping
   public static ArrayList<Point> giftWrapping(ArrayList<Point> points){
     if(points.isEmpty()) return new ArrayList<Point>();
     
@@ -16,7 +19,7 @@ public class ConvexHull {
     }
 
     // Get any point on the x-axis
-    Point px = new Point(q.x - 1, q.y, Point.POINT_RADIUS); //p_j-1
+    Point px = new Point(q.x - 1, q.y); //p_j-1
     
     Point middlePoint = q;
     Point newPoint = px;
@@ -29,7 +32,7 @@ public class ConvexHull {
           continue;
         }
         
-        float newAngle = getAngle(middlePoint, px, p);
+        float newAngle = Point.getAngle(middlePoint, px, p);
         if(newAngle < angle){
           angle = newAngle;
           newPoint = p;
@@ -45,9 +48,50 @@ public class ConvexHull {
     
   }
   
-  private static float getAngle(Point middlePoint, Point p2, Point p3){
-    PVector v1 = new PVector(p2.x-middlePoint.x, p2.y-middlePoint.y);
-    PVector v2 = new PVector(middlePoint.x-p3.x,middlePoint.y-p3.y);
-    return PVector.angleBetween(v1,v2);
+  // Graham Scan
+  public static ArrayList<Point> grahamScan(ArrayList<Point> points){
+    if(points.isEmpty()) return new ArrayList<Point>();
+    
+    ArrayList<Point> convexHull = new ArrayList();
+    
+    // Find pivot
+    Point q = points.get(0);
+    for(Point p : points){
+      if(p.y < q.y){
+        q = p;
+      } else if(p.y == q.y && p.x < q.x){
+        q = p;
+      }
+    }
+    
+    // Sort points by angle
+    ArrayList<Point> sortedPoints = new ArrayList(points);
+    Collections.sort(sortedPoints, new PointsByAngleComparator(q));
+    
+    // If two points have the same angle, remove the closest to q
+    //TODO
+    
+    int j = 2;
+    
+    convexHull.add(q);
+    convexHull.add(sortedPoints.get(1));
+    int i = 1;
+    
+    while(j<sortedPoints.size()){
+      Point pj = sortedPoints.get(j);
+      if(Point.getOrientation(pj, convexHull.get(i-1),convexHull.get(i)) > 0){
+        convexHull.add(pj);
+        i++;
+        j++;
+      }
+      else{
+        convexHull.remove(convexHull.size() - 1);
+        if(i>1) i--;
+      }
+    }
+
+    return convexHull;    
   }
+  
+
 }

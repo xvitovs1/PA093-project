@@ -1,3 +1,5 @@
+import processing.core.PVector;
+
 public class Point {
   float x;
   float y;
@@ -6,10 +8,10 @@ public class Point {
   // Point radius
 public static final int POINT_RADIUS = 5;
   
-  Point(float x, float y, float radius) {
+  Point(float x, float y) {
     this.x = x;
     this.y = y;
-    this.radius = radius;
+    this.radius = POINT_RADIUS;
   }
   
   @Override
@@ -41,5 +43,15 @@ public static final int POINT_RADIUS = 5;
       return true;
     }
     return false;
+  }
+  
+  public static float getAngle(Point middlePoint, Point p2, Point p3){
+    PVector v1 = new PVector(p2.x-middlePoint.x, p2.y-middlePoint.y);
+    PVector v2 = new PVector(middlePoint.x-p3.x,middlePoint.y-p3.y);
+    return PVector.angleBetween(v1,v2);
+  }
+  
+  public static float getOrientation(Point p1, Point p2, Point p3){
+    return (p2.x-p1.x)*(p3.y-p1.y) - (p2.y-p1.y)*(p3.x-p1.x);
   }
 }

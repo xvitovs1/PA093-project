@@ -53,7 +53,7 @@ void mouseDragged() {
 
 // Add point
 void addPoint(float x, float y){
-  Point p = new Point(x, y, Point.POINT_RADIUS);
+  Point p = new Point(x, y);
   points.add(p);
   fill(0);
   ellipse(p.x, p.y, p.radius * 2, p.radius * 2);
@@ -89,11 +89,17 @@ void randomPoints(int count) {
   }
 }
 
-void drawConvexHull(){
+void drawConvexHull(boolean useGrahamScan){
   // Get the convex hull
   if(points.isEmpty()) return;
   
-  ArrayList<Point> convexHull = ConvexHull.giftWrapping(points);
+  ArrayList<Point> convexHull;
+  
+  if(useGrahamScan){
+    convexHull= ConvexHull.grahamScan(points);
+  } else{
+    convexHull= ConvexHull.giftWrapping(points);
+  }
   
   // Draw the convex hull
   for(int i = 0; i < convexHull.size() - 1; i++){
@@ -121,7 +127,9 @@ void keyPressed() {
                 break;
     case('m') : setMode(false,false, true);
                 break;
-    case('h') : drawConvexHull();
+    case('h') : drawConvexHull(false);
+                break;
+    case('g') : drawConvexHull(true);
                 break;
   }
 
@@ -151,10 +159,11 @@ synchronized public void window_draw(PApplet appc, GWinData data) {
   appc.text("r ... Generate random points", 10,120);
   appc.text("c ... Clear screen", 10,140);
   appc.text("h ... Convex Hull - gift wrapping", 10,160);
+  appc.text("g ... Convex Hull - graham scan", 10,180);
 } 
  
 void createWindow() {
-  window = GWindow.getWindow(this, "Help", 500, 50, 200,180, JAVA2D);
+  window = GWindow.getWindow(this, "Help", 500, 50, 200,220, JAVA2D);
   window.addDrawHandler(this, "window_draw");
   window.addOnCloseHandler(this, "windowClosing");
   window.setActionOnClose(GWindow.CLOSE_WINDOW);
