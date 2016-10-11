@@ -13,7 +13,6 @@ Point dragPoint = null;
 static final int RANDOM_POINTS_NUM = 10;
 
 void setup() {
-  size(840, 480);
   background(255);
   points = new ArrayList<Point>();
   btnHelp = new GButton(this, 10, 10, 140, 20, "Help");
