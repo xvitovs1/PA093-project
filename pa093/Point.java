@@ -51,6 +51,13 @@ public static final int POINT_RADIUS = 5;
     return PVector.angleBetween(v1,v2);
   }
   
+  /**
+  * Gets orientation of three points.
+  * @param p1 point 1
+  * @param p2 point 2
+  * @param p2 point 3
+  * @return 0 if the points lie on the same line, >0 if the points are counter-clockwise and <0 if the points are clockwise
+  */
   public static float getOrientation(Point p1, Point p2, Point p3){
     return (p2.x-p1.x)*(p3.y-p1.y) - (p2.y-p1.y)*(p3.x-p1.x);
   }

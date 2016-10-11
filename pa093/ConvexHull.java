@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Stack;
 import java.util.Collections;
 
 public class ConvexHull {
@@ -67,9 +66,6 @@ public class ConvexHull {
     // Sort points by angle
     ArrayList<Point> sortedPoints = new ArrayList(points);
     Collections.sort(sortedPoints, new PointsByAngleComparator(q));
-    
-    // If two points have the same angle, remove the closest to q
-    //TODO
     
     int j = 2;
     

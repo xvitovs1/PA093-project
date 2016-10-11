@@ -113,6 +113,12 @@ void drawConvexHull(boolean useGrahamScan){
   line(p1.x, p1.y, p2.x, p2.y);
 }
 
+// Draw triangulation
+void drawTriangulation(){
+  ArrayList<Point> convexHull= ConvexHull.giftWrapping(points);
+  //TODO
+}
+
 void keyPressed() {
   switch (key) {
     case('c') : clear();
@@ -130,6 +136,8 @@ void keyPressed() {
     case('h') : drawConvexHull(false);
                 break;
     case('g') : drawConvexHull(true);
+                break;
+    case('t') : drawTriangulation();
                 break;
   }
 
@@ -160,10 +168,11 @@ synchronized public void window_draw(PApplet appc, GWinData data) {
   appc.text("c ... Clear screen", 10,140);
   appc.text("h ... Convex Hull - gift wrapping", 10,160);
   appc.text("g ... Convex Hull - graham scan", 10,180);
+  appc.text("t ... Triangulation", 10,200);
 } 
  
 void createWindow() {
-  window = GWindow.getWindow(this, "Help", 500, 50, 200,220, JAVA2D);
+  window = GWindow.getWindow(this, "Help", 500, 50, 200,240, JAVA2D);
   window.addDrawHandler(this, "window_draw");
   window.addOnCloseHandler(this, "windowClosing");
   window.setActionOnClose(GWindow.CLOSE_WINDOW);
