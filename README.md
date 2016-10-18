@@ -14,5 +14,5 @@
 * `r` - Generate random points
 * `c` - Clear screen
 * `h` - Convex hull - gift wrapping
-* 'g' - Convex hull - Graham scan
-* 't' - triangulation for convex hull
+* `g` - Convex hull - Graham scan
+* `t` - triangulation for convex hull
