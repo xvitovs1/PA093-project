@@ -61,4 +61,8 @@ public static final int POINT_RADIUS = 5;
   public static float getOrientation(Point p1, Point p2, Point p3){
     return (p2.x-p1.x)*(p3.y-p1.y) - (p2.y-p1.y)*(p3.x-p1.x);
   }
+  
+  public String toString() { 
+    return "[" + this.x + "," + this.y + "]";
+  } 
 }

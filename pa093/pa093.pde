@@ -115,8 +115,12 @@ void drawConvexHull(boolean useGrahamScan){
 
 // Draw triangulation
 void drawTriangulation(){
+  if(points.isEmpty()) return;
   ArrayList<Point> convexHull= ConvexHull.giftWrapping(points);
-  //TODO
+  ArrayList<LineSegment> triangulation = Triangulation.triangulate(convexHull);
+  for(LineSegment l : triangulation){
+    line(l.x.x, l.x.y, l.y.x, l.y.y);
+  }
 }
 
 void keyPressed() {
