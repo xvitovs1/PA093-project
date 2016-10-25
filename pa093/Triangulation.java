@@ -7,18 +7,11 @@ import java.util.LinkedList;
 public class Triangulation{
   
   // Triangulation algorithm from http://www.cs.uu.nl/geobook/pseudo.pdf
-  public static ArrayList<LineSegment> triangulate(ArrayList<Point> points){
+  public static ArrayList<LineSegment> triangulate(ArrayList<Point> points, ArrayList<LineSegment> polygon){
     // Sort the points
     ArrayList<Point> sortedPoints = new ArrayList<Point>(points);
     Collections.sort(sortedPoints, new PointsByYComparator());
-    
-    // Get polygon
-    ArrayList<LineSegment> polygon = new ArrayList<LineSegment>();
-    for(int i = 1; i < points.size(); i++){
-      polygon.add(new LineSegment(points.get(i-1), points.get(i)));
-    }
-    polygon.add(new LineSegment(points.get(0), points.get(points.size() - 1)));
-    
+
     ArrayList<Point> queueLeft = new ArrayList<Point>();
     ArrayList<Point> queueRight = new ArrayList<Point>();
 
@@ -48,7 +41,8 @@ public class Triangulation{
         while(!stack.empty()){
           poppedPoint = (Point)stack.pop();
           LineSegment ls = new LineSegment(sortedPoints.get(i),poppedPoint);
-          if(LineSegment.segmentInPolygon(polygon, points,ls)) polygon.add(ls);
+          //if(LineSegment.segmentInPolygon(polygon, points,ls)) 
+            polygon.add(ls);
         }
         
         // Push the last popped vertex back to the stack
@@ -70,6 +64,17 @@ public class Triangulation{
     polygon.remove(polygon.size() - 1);
     
     return polygon;
+  }
+  
+    public static ArrayList<LineSegment> triangulate(ArrayList<Point> points){
+    // Get polygon
+    ArrayList<LineSegment> polygon = new ArrayList<LineSegment>();
+    for(int i = 1; i < points.size(); i++){
+      polygon.add(new LineSegment(points.get(i-1), points.get(i)));
+    }
+    polygon.add(new LineSegment(points.get(0), points.get(points.size() - 1)));
+    
+    return triangulate(points, polygon);
   }
   
   private static void fillQueues(ArrayList<Point> sortedPoints, ArrayList<Point> queueLeft, ArrayList<Point> queueRight){
