@@ -47,7 +47,8 @@ public class Triangulation{
         Point poppedPoint = null;
         while(!stack.empty()){
           poppedPoint = (Point)stack.pop();
-          polygon.add(new LineSegment(sortedPoints.get(i),poppedPoint));
+          LineSegment ls = new LineSegment(sortedPoints.get(i),poppedPoint);
+          if(LineSegment.segmentInPolygon(polygon, points,ls)) polygon.add(ls);
         }
         
         // Push the last popped vertex back to the stack

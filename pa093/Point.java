@@ -1,4 +1,5 @@
 import processing.core.PVector;
+import java.util.ArrayList;
 
 public class Point {
   float x;
@@ -46,8 +47,9 @@ public static final int POINT_RADIUS = 5;
   }
   
   public static float getAngle(Point middlePoint, Point p2, Point p3){
-    PVector v1 = new PVector(p2.x-middlePoint.x, p2.y-middlePoint.y);
-    PVector v2 = new PVector(middlePoint.x-p3.x,middlePoint.y-p3.y);
+    
+    PVector v1 = getVector(middlePoint, p2);
+    PVector v2 = getVector(p3, middlePoint);
     return PVector.angleBetween(v1,v2);
   }
   
@@ -64,5 +66,57 @@ public static final int POINT_RADIUS = 5;
   
   public String toString() { 
     return "[" + this.x + "," + this.y + "]";
-  } 
+  }
+  
+  private static PVector getVector(Point a, Point b){
+    return new PVector(b.x - a.x, b.y - a.y);
+  }
+  
+  //Gets the distance from a to b
+  public static double distance(Point a, Point b){
+    double d1 = a.x - b.x;
+    double d2 = a.y - b.y;
+    return Math.sqrt(d1*d1+d2*d2);
+  }
+  
+  public static float cross(Point a, Point b, Point c){
+        float abx = b.x - a.x;
+        float aby = b.y - a.y;
+        float acx = c.x - a.x;
+        float acy = c.y - a.y;
+        float cross = abx * acy - aby * acx;
+        return cross;
+    }
+ 
+  //Gets the distance from ab segment to c
+  public static double linePointDistance(Point a, Point b, Point c){
+    double dist = cross(a,b,c) / distance(a,b);
+    float dot1 = PVector.dot(getVector(a,b),getVector(b,c));
+    if(dot1 > 0)return distance(b,c);
+    float dot2 = PVector.dot(getVector(b,a),getVector(a,c));
+    if(dot2 > 0)return distance(a,c);
+    return Math.abs(dist);
+  }
+  
+   public static boolean isPointInPolygon(ArrayList<Point> vertices, Point p) {
+
+      if (vertices.size() < 3)
+         return false;
+
+      boolean oddNodes = false;
+      float x2 = ((Point)vertices.get(vertices.size() - 1)).x;
+      float y2 = ((Point)vertices.get(vertices.size() - 1)).y;
+      float x1, y1;
+      for (int i = 0; i < vertices.size(); x2 = x1, y2 = y1, ++i) {
+         x1 = ((Point)vertices.get(i)).x;
+         y1 = ((Point)vertices.get(i)).y;
+         if (((y1 < p.y) && (y2 >= p.y))
+               || (y1 >= p.y) && (y2 < p.y)) {
+            if ((p.y - y1) / (y2 - y1)
+                  * (x2 - x1) < (p.x - x1))
+               oddNodes = !oddNodes;
+         }
+      }
+      return oddNodes;
+   }
 }

@@ -9,8 +9,8 @@ public class PointsByYComparator implements Comparator<Point> {
     if(diff < 0) return 1;
     
     diff = a.x - b.x;
-    if(diff > 0) return 1;
-    if(diff < 0) return -1;
+    if(diff > 0) return -1;
+    if(diff < 0) return 1;
     
     return 0;
   }
