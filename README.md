@@ -15,4 +15,4 @@
 * `c` - Clear screen
 * `h` - Convex hull - gift wrapping
 * `g` - Convex hull - Graham scan
-* `t` - triangulation for convex hull
+* `t` - Triangulation for convex hull
