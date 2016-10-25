@@ -6,7 +6,9 @@ GWindow window;
 boolean addPoints; // adding points mode
 boolean removePoints; // removing points mode
 boolean movePoint; // moving points mode
+boolean createPolygon; // creating polygon mode
 ArrayList<Point> points;
+ArrayList<LineSegment> polygon;
 Point dragPoint = null;
 
 // Number of random points
@@ -16,6 +18,7 @@ void setup() {
   size(1200, 900);
   background(255);
   points = new ArrayList<Point>();
+  polygon = new ArrayList<LineSegment>();
   btnHelp = new GButton(this, 10, 10, 140, 20, "Help");
 }
 
@@ -34,12 +37,25 @@ void mousePressed() {
 }
 
 void mouseClicked() {
+ 
     if(addPoints) {
-      addPoint(mouseX, mouseY);
+      addPoint(new Point(mouseX, mouseY));
     }
     else if (removePoints) {
       removePoint(mouseX, mouseY);
       redrawPoints();
+    }
+    else if(createPolygon) {
+      Point p = new Point(mouseX, mouseY);
+      if (mouseButton == RIGHT) {
+        setMode(false, false, false, false);
+        if(points.size() > 0)
+          addSegment(points.get(points.size() - 1), points.get(0));
+        return;
+      }
+      if(points.size() > 0)
+        addSegment(points.get(points.size() - 1), p);
+      addPoint(p);
     }
 }
 
@@ -51,9 +67,15 @@ void mouseDragged() {
   }
 }
 
+// Add segment
+void addSegment(Point x, Point y){
+  polygon.add(new LineSegment(x,y));
+  fill(0);
+  line(x.x, x.y, y.x, y.y);
+}
+
 // Add point
-void addPoint(float x, float y){
-  Point p = new Point(x, y);
+void addPoint(Point p){
   points.add(p);
   fill(0);
   ellipse(p.x, p.y, p.radius * 2, p.radius * 2);
@@ -85,7 +107,7 @@ void redrawPoints(){
 // Draw random points
 void randomPoints(int count) {
   for(int i = 0; i < count; i++) {
-        addPoint(random(width), random(height));
+        addPoint(new Point(random(width), random(height)));
   }
 }
 
@@ -127,15 +149,18 @@ void keyPressed() {
   switch (key) {
     case('c') : clear();
                 points.clear();
+                polygon.clear();
                 background(255);
                 break;
-    case('a') : setMode(true, false, false);
+    case('a') : setMode(true, false, false, false);
                 break;
-    case('d') : setMode(false,true, false);
+    case('p') : setMode(false, false, false, true);
+                break;
+    case('d') : setMode(false,true, false, false);
                 break;
     case('r') : randomPoints(RANDOM_POINTS_NUM);
                 break;
-    case('m') : setMode(false,false, true);
+    case('m') : setMode(false,false, true, false);
                 break;
     case('h') : drawConvexHull(false);
                 break;
@@ -147,10 +172,11 @@ void keyPressed() {
 
 }
 
-void setMode(boolean add, boolean remove, boolean move){
+void setMode(boolean add, boolean remove, boolean move, boolean polygon){
   addPoints = add;
   removePoints = remove;
   movePoint = move;
+  createPolygon = polygon;
 }
 
 void handleButtonEvents(GButton button, GEvent event) {
@@ -167,16 +193,17 @@ synchronized public void window_draw(PApplet appc, GWinData data) {
   appc.text("---------------------", 10,40);
   appc.text("a ... Adding points", 10,60);
   appc.text("d ... Removing points", 10,80);
-  appc.text("m ... Move points", 10,100);
-  appc.text("r ... Generate random points", 10,120);
-  appc.text("c ... Clear screen", 10,140);
-  appc.text("h ... Convex Hull - gift wrapping", 10,160);
-  appc.text("g ... Convex Hull - graham scan", 10,180);
-  appc.text("t ... Triangulation", 10,200);
+  appc.text("p ... Create polygon (end with right mouse button click)", 10,100);
+  appc.text("m ... Move points", 10,120);
+  appc.text("r ... Generate random points", 10,140);
+  appc.text("c ... Clear screen", 10,160);
+  appc.text("h ... Convex Hull - gift wrapping", 10,180);
+  appc.text("g ... Convex Hull - graham scan", 10,200);
+  appc.text("t ... Triangulation", 10,220);
 } 
  
 void createWindow() {
-  window = GWindow.getWindow(this, "Help", 500, 50, 200,240, JAVA2D);
+  window = GWindow.getWindow(this, "Help", 500, 50, 400,260, JAVA2D);
   window.addDrawHandler(this, "window_draw");
   window.addOnCloseHandler(this, "windowClosing");
   window.setActionOnClose(GWindow.CLOSE_WINDOW);
