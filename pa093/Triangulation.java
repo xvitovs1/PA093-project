@@ -41,7 +41,7 @@ public class Triangulation{
         while(!stack.empty()){
           poppedPoint = (Point)stack.pop();
           LineSegment ls = new LineSegment(sortedPoints.get(i),poppedPoint);
-          //if(LineSegment.segmentInPolygon(polygon, points,ls)) 
+          if(LineSegment.segmentInPolygon(polygon, points,ls)) 
             polygon.add(ls);
         }
         

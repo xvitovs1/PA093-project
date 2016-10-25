@@ -26,6 +26,20 @@ public class LineSegment {
       return null;
   }
 
+  private static boolean isOnLine(Point p, LineSegment l){
+    float dxc = p.x - l.x.x;
+    float dyc = p.y - l.x.y;
+    
+    float dxl = l.y.x - l.x.x;
+    float dyl = l.y.y - l.x.y;
+    
+    float cross = dxc * dyl - dyc * dxl;
+
+    if (cross != 0)
+      return false;
+      
+    return true;
+  }
   
   //Checks if segment a is inside the polygon
   public static boolean segmentInPolygon(ArrayList<LineSegment> polygon, ArrayList<Point> vertices, LineSegment a){
@@ -33,7 +47,7 @@ public class LineSegment {
     
     for(LineSegment s : polygon){
       Point intersect = lineIntersect(s.x, s.y, a.x, a.y);
-      if(intersect != null && !intersect.equals(a.x) && !intersect.equals(a.y)) {System.out.println(intersect + " " + a.x + " " + a.y);return false;}
+      if(intersect != null && !isOnLine(a.x, s) && !isOnLine(a.y, s)) {System.out.println(intersect + " " + a.x + " " + a.y);return false;}
     }
     
     return true;
