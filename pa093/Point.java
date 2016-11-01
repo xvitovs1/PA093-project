@@ -78,45 +78,5 @@ public static final int POINT_RADIUS = 5;
     double d2 = a.y - b.y;
     return Math.sqrt(d1*d1+d2*d2);
   }
-  
-  public static float cross(Point a, Point b, Point c){
-        float abx = b.x - a.x;
-        float aby = b.y - a.y;
-        float acx = c.x - a.x;
-        float acy = c.y - a.y;
-        float cross = abx * acy - aby * acx;
-        return cross;
-    }
- 
-  //Gets the distance from ab segment to c
-  public static double linePointDistance(Point a, Point b, Point c){
-    double dist = cross(a,b,c) / distance(a,b);
-    float dot1 = PVector.dot(getVector(a,b),getVector(b,c));
-    if(dot1 > 0)return distance(b,c);
-    float dot2 = PVector.dot(getVector(b,a),getVector(a,c));
-    if(dot2 > 0)return distance(a,c);
-    return Math.abs(dist);
-  }
-  
-   public static boolean isPointInPolygon(ArrayList<Point> vertices, Point p) {
 
-      if (vertices.size() < 3)
-         return false;
-
-      boolean oddNodes = false;
-      float x2 = ((Point)vertices.get(vertices.size() - 1)).x;
-      float y2 = ((Point)vertices.get(vertices.size() - 1)).y;
-      float x1, y1;
-      for (int i = 0; i < vertices.size(); x2 = x1, y2 = y1, ++i) {
-         x1 = ((Point)vertices.get(i)).x;
-         y1 = ((Point)vertices.get(i)).y;
-         if (((y1 < p.y) && (y2 >= p.y))
-               || (y1 >= p.y) && (y2 < p.y)) {
-            if ((p.y - y1) / (y2 - y1)
-                  * (x2 - x1) < (p.x - x1))
-               oddNodes = !oddNodes;
-         }
-      }
-      return oddNodes;
-   }
 }
