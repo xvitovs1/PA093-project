@@ -36,19 +36,18 @@ public class Triangulation{
         stack.push(sortedPoints.get(i-1));
         stack.push(sortedPoints.get(i));      
       } else {        
-        // Pop one vertex from the stack
-        //stack.pop();
-        // Pop the other vertices as long as the diagonals from sortedPoints[i] to them are inside polygon and insert
+        // Pop the vertices as long as the diagonals from sortedPoints[i] to them are inside polygon and insert
         Point poppedPoint = (Point)stack.pop();
         float v1x = 0;
         float v1y = 0;
         float v2x =0;
         float v2y = 0;
         if (!stack.empty()) {
-            v1x =  poppedPoint.x - ((Point)stack.peek()).x;
-            v1y =  poppedPoint.y - ((Point)stack.peek()).y;
-            v2x = sortedPoints.get(i).x - ((Point)stack.peek()).x;
-            v2y = sortedPoints.get(i).y - ((Point)stack.peek()).y ;
+            Point peekPoint = (Point)stack.peek();
+            v1x =  poppedPoint.x - peekPoint.x;
+            v1y =  poppedPoint.y - peekPoint.y;
+            v2x = sortedPoints.get(i).x - peekPoint.x;
+            v2y = sortedPoints.get(i).y - peekPoint.y ;
         }
         while(!stack.empty() && ((v1x * v2y - v1y * v2x >= 0) ? bothOnLeft : bothOnRight)){
           LineSegment ls = new LineSegment(sortedPoints.get(i),poppedPoint);
