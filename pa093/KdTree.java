@@ -3,6 +3,10 @@ import java.util.Collections;
 
 public class KdTree{
   public static KdNode buildTree(ArrayList<Point> points, int depth){
+    if(points.size() == 0){
+      return null;
+    }
+    
     if(points.size() == 1){
       return new KdNode(points.get(0), null, null, depth);
     } else{
@@ -16,7 +20,7 @@ public class KdTree{
       } else{
         Collections.sort(points, new PointsByYComparator());
         l = points.get(points.size() / 2);
-        splitPoints(l, points, p1, p2);
+        splitPoints(l, points, p2, p1);
       }
       KdNode v_left = buildTree(p1, depth+1);
       KdNode v_right = buildTree(p2, depth+1);
@@ -32,7 +36,7 @@ public class KdTree{
       i++;
     }
     
-    p2.add(points.get(i));
+   // p2.add(points.get(i));
     i++;
     while(i < points.size()){
       p2.add(points.get(i));
@@ -68,8 +72,8 @@ public class KdTree{
       LineSegment l = new LineSegment(x,y);
       ArrayList<LineSegment> lines = new ArrayList<LineSegment>();
       lines.add(l);
-      lines.addAll(getLines(root.left, bottomLine, root.point.y, leftLine, rightLine));
-      lines.addAll(getLines(root.right, root.point.y, topLine, leftLine, rightLine));
+      lines.addAll(getLines(root.right, bottomLine, root.point.y, leftLine, rightLine));
+      lines.addAll(getLines(root.left, root.point.y, topLine, leftLine, rightLine));
       return lines;
     }
   }
