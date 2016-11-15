@@ -2,9 +2,10 @@
 
 ##Implemented algorithms:
 
-* Convex hull - gift wrapping
+* Convex hull - Gift wrapping
 * Convex hull - Graham scan
 * Triangulation
+* Kd-tree
 
 ##Modes:
 
@@ -17,6 +18,7 @@
 
 * `r` - Generate random points
 * `c` - Clear screen
-* `h` - Convex hull - gift wrapping
+* `h` - Convex hull - Gift wrapping
 * `g` - Convex hull - Graham scan
 * `t` - Triangulation for convex hull or monotone polygon
+* `k` - Kd-tree
