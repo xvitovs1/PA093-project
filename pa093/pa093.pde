@@ -152,6 +152,17 @@ void drawTriangulation(){
   }
 }
 
+// Draw Kd tree
+void drawKdTree(){
+  if(points.isEmpty()) return;
+  KdNode root = KdTree.buildTree(points,0);
+  ArrayList<LineSegment> tree = KdTree.getLines(root, height, width);
+  
+  for(LineSegment l : tree){
+    line(l.x.x, l.x.y, l.y.x, l.y.y);
+  }
+}
+
 void keyPressed() {
   switch (key) {
     case('c') : clear();
@@ -174,6 +185,8 @@ void keyPressed() {
     case('g') : drawConvexHull(true);
                 break;
     case('t') : drawTriangulation();
+                break;
+    case('k') : drawKdTree();
                 break;
   }
 

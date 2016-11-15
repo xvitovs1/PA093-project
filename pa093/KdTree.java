@@ -14,7 +14,6 @@ public class KdTree{
         l = points.get(points.size() / 2);
         splitPoints(l, points, p1, p2);
       } else{
-        //TODO check this later
         Collections.sort(points, new PointsByYComparator());
         l = points.get(points.size() / 2);
         splitPoints(l, points, p1, p2);
@@ -41,12 +40,16 @@ public class KdTree{
     }
   }
   
-  public static ArrayList<LineSegment> getLines(KdNode root, int bottom, int maxRight){
+  public static ArrayList<LineSegment> getLines(KdNode root, float bottom, float maxRight){
     return getLines(root, bottom, 0, 0, maxRight);
   }
   
-  private static ArrayList<LineSegment> getLines(KdNode root, int bottomLine, int topLine, int leftLine, int rightLine){
+  private static ArrayList<LineSegment> getLines(KdNode root, float bottomLine, float topLine, float leftLine, float rightLine){
     if(root == null){
+      return new ArrayList<LineSegment>();
+    }
+    
+    if(root.left == null && root.right == null){
       return new ArrayList<LineSegment>();
     }
     
@@ -56,14 +59,18 @@ public class KdTree{
       LineSegment l = new LineSegment(x,y);
       ArrayList<LineSegment> lines = new ArrayList<LineSegment>();
       lines.add(l);
-      return lines.addAll(getLines(root.left)).addAll(getLines(root.right));
+      lines.addAll(getLines(root.left, bottomLine, topLine, leftLine, root.point.x));
+      lines.addAll(getLines(root.right, bottomLine, topLine, root.point.x, rightLine));
+      return lines;
     } else {
       Point x = new Point(leftLine,root.point.y);
       Point y = new Point(rightLine,root.point.y);
       LineSegment l = new LineSegment(x,y);
       ArrayList<LineSegment> lines = new ArrayList<LineSegment>();
       lines.add(l);
-      return lines.addAll(getLines(root.left)).addAll(getLines(root.right));
+      lines.addAll(getLines(root.left, bottomLine, root.point.y, leftLine, rightLine));
+      lines.addAll(getLines(root.right, root.point.y, topLine, leftLine, rightLine));
+      return lines;
     }
   }
 }

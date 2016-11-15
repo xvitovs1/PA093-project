@@ -2,9 +2,13 @@ import java.util.Comparator;
 
 public class PointsByXComparator implements Comparator<Point> {
   
-  @Override
+   @Override
   public int compare(Point a, Point b) {
-    return a.x - b.x;
+    float diff = a.x - b.x;
+    if(diff > 0) return 1;
+    if(diff < 0) return -1;
+    
+    return 0;
   }
 
   public boolean equals(Object obj) {
