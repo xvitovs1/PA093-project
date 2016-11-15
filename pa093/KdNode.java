@@ -1,3 +1,4 @@
+// Represents a node in a kd-tree
 public class KdNode{
   public Point point;
   public KdNode left;
