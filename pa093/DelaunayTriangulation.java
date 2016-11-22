@@ -6,9 +6,10 @@ import processing.core.PVector;
 public class DelaunayTriangulation{
   
   // Delaunay triangulation
-  public static ArrayList<LineSegment> triangulate(ArrayList<Point> points, ArrayList<LineSegment> AEL){
+  public static ArrayList<LineSegment> triangulate(ArrayList<Point> points){
     
     ArrayList<LineSegment> DT = new ArrayList<LineSegment>();
+    ArrayList<LineSegment> AEL = new ArrayList<LineSegment>();
     
     // get random point from points
     Random randomGenerator = new Random();
@@ -19,8 +20,8 @@ public class DelaunayTriangulation{
     Point p2 = null; 
     float distance = Float.MAX_VALUE;
     for (Point p : points){
-      if(p.equals(p2)) continue;
-      float d = (float)Point.distance(p, p2);
+      if(p.equals(p1)) continue;
+      float d = (float)Point.distance(p, p1);
       if(d < distance){
         distance = d;
         p2 = p;
@@ -31,7 +32,8 @@ public class DelaunayTriangulation{
     LineSegment e = new LineSegment(p1, p2);
     
     // Find the point with smallest Delanay distance on the left from e
-    Point p = getPointWithSmallestDD(points, e);
+    ArrayList<Point> pointsOnLeft = getPointOnLeft(e, points);
+    Point p = getPointWithSmallestDD(pointsOnLeft, e);
     
     if(p == null){
       e = new LineSegment(p2, p1);
@@ -42,23 +44,27 @@ public class DelaunayTriangulation{
     LineSegment e3 = new LineSegment(p, p1);
     
     // Add e, e2, e3 to AEL
-    AddToAEL(e, AEL, DT);
-    AddToAEL(e2, AEL, DT);
-    AddToAEL(e3, AEL, DT);
+    addToAEL(e, AEL, DT);
+    addToAEL(e2, AEL, DT);
+    addToAEL(e3, AEL, DT);
     
     while(!AEL.isEmpty()){
       e = AEL.get(0);
       e = new LineSegment(e.y, e.x);
-      p = getPointWithSmallestDD(points, e);
+      // Find the point with smallest Delanay distance on the left from e
+      pointsOnLeft = getPointOnLeft(e, points);
+      p = getPointWithSmallestDD(pointsOnLeft, e);
       if(p != null){
         e2 = new LineSegment(p2, p);
         e3 = new LineSegment(p, p1);
-        //TODO
+        
+        if(!AEL.contains(e2) && !DT.contains(e2)) addToAEL(e2, AEL, DT);
+        if(!AEL.contains(e3) && !DT.contains(e3)) addToAEL(e3, AEL, DT);
       }
       
       DT.add(e);
       
-      // pop(e)
+      AEL.remove(e);
     }
     
     return null;      
@@ -92,8 +98,18 @@ public class DelaunayTriangulation{
     return p;
   }
   
+  private static ArrayList<Point> getPointOnLeft(LineSegment ls, ArrayList<Point> points){
+    ArrayList<Point> pointsOnLeft = new ArrayList<Point>();
+    for(Point cp : points){
+      if(Point.getOrientation(cp, ls.x, ls.y) > 0){
+        pointsOnLeft.add(cp); //TODO check this
+      }
+    }
+    return pointsOnLeft;
+  }
+  
   // Adds edge to Active Edge List
-  private static void AddToAEL(LineSegment e, ArrayList<LineSegment> AEL, ArrayList<LineSegment> DT){
+  private static void addToAEL(LineSegment e, ArrayList<LineSegment> AEL, ArrayList<LineSegment> DT){
     LineSegment oe = new LineSegment(e.y, e.x);
     if(AEL.contains(oe)){
       AEL.remove(e);

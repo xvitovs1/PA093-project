@@ -152,6 +152,16 @@ void drawTriangulation(){
   }
 }
 
+// Draw Delaunay triangulation
+void drawDelaunayTriangulation(){
+  if(points.isEmpty()) return;
+  ArrayList<LineSegment> triangulation = DelaunayTriangulation.triangulate(points);
+
+  for(LineSegment l : triangulation){
+    line(l.x.x, l.x.y, l.y.x, l.y.y);
+  }
+}
+
 // Draw Kd tree
 void drawKdTree(){
   if(points.isEmpty()) return;
@@ -185,6 +195,8 @@ void keyPressed() {
     case('g') : drawConvexHull(true);
                 break;
     case('t') : drawTriangulation();
+                break;
+    case('l') : //drawDelaunayTriangulation();
                 break;
     case('k') : drawKdTree();
                 break;
@@ -220,10 +232,12 @@ synchronized public void window_draw(PApplet appc, GWinData data) {
   appc.text("h ... Convex Hull - gift wrapping", 10,180);
   appc.text("g ... Convex Hull - graham scan", 10,200);
   appc.text("t ... Triangulation", 10,220);
+  appc.text("k ... Kd-tree", 10,240);
+  appc.text("l ... Delaunay Triangulation", 10,260);
 } 
  
 void createWindow() {
-  window = GWindow.getWindow(this, "Help", 500, 50, 400,260, JAVA2D);
+  window = GWindow.getWindow(this, "Help", 500, 50, 400,300, JAVA2D);
   window.addDrawHandler(this, "window_draw");
   window.addOnCloseHandler(this, "windowClosing");
   window.setActionOnClose(GWindow.CLOSE_WINDOW);
