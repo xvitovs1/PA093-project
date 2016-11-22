@@ -78,5 +78,9 @@ public static final int POINT_RADIUS = 5;
     double d2 = a.y - b.y;
     return Math.sqrt(d1*d1+d2*d2);
   }
+  
+  public static float dot(Point p, Point q) {
+    return p.x*q.x + p.y*q.y;
+  }
 
 }

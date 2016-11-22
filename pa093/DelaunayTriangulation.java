@@ -20,7 +20,7 @@ public class DelaunayTriangulation{
     float distance = Float.MAX_VALUE;
     for (Point p : points){
       if(p.equals(p2)) continue;
-      float d = Point.distance(p, p2);
+      float d = (float)Point.distance(p, p2);
       if(d < distance){
         distance = d;
         p2 = p;
@@ -48,7 +48,17 @@ public class DelaunayTriangulation{
     
     while(!AEL.isEmpty()){
       e = AEL.get(0);
+      e = new LineSegment(e.y, e.x);
+      p = getPointWithSmallestDD(points, e);
+      if(p != null){
+        e2 = new LineSegment(p2, p);
+        e3 = new LineSegment(p, p1);
+        //TODO
+      }
       
+      DT.add(e);
+      
+      // pop(e)
     }
     
     return null;      
@@ -57,6 +67,10 @@ public class DelaunayTriangulation{
   // Computes delaunay distance between point p and line segment ls
   private static float delaunayDistance(LineSegment ls, Point p){
     //TODO
+    
+    Point circumcenter = getCircumcircleCenter(p, ls);
+    float r = p.distance(circumcenter);
+    
     return 0;
   }
   
@@ -86,6 +100,17 @@ public class DelaunayTriangulation{
     
     DT.add(e);
   }
+  
+  private Point getCircumcircleCenter(Point p, LineSegment ls){
+    Point p1 = ls.x;
+    Point p2 = ls.y;
+    Point midDiff = new Point((p2.x-p.x)/2, (p2.y-p.y)/2);
+    Point u = new Point(p.y-p1.y, p1.x-p.x);
+    Point v = new Point(p2.x-p1.x, p2.y-p1.x);
+    Point t = Point.dot(midDiff, v)/Point.dot(u, v);
+    Point circumcenter = new Point(t*u.x + (p.x+p1.x)/2, t*u.y + (p.y+p1.y)/2);
+  }
+  
   
   
 }
