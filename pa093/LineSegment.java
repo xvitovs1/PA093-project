@@ -23,5 +23,28 @@ public class LineSegment {
       
     return true;
   }
+  
+  @Override
+  public boolean equals(Object obj) {
+      if (obj == null) {
+          return false;
+      }
+      if (!(obj instanceof LineSegment)) {
+          return false;
+      }
+      
+      LineSegment other = (LineSegment) obj;
+      if (!(this.x.equals(other.x)) || (!this.y.equals(other.y))) {
+          return false;
+      }
+
+      return true;
+  }
+  
+  @Override
+  public int hashCode() {
+      int hash = 877 * Math.round(this.x.x) + Math.round(this.y.y) * Math.round(this.y.x);
+      return hash;
+  }
 
 }
