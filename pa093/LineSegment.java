@@ -46,5 +46,10 @@ public class LineSegment {
       int hash = 877 * Math.round(this.x.x) + Math.round(this.y.y) * Math.round(this.y.x);
       return hash;
   }
+  
+  @Override
+  public String toString(){
+    return "(" + x + "," + y + ")";
+  }
 
 }
