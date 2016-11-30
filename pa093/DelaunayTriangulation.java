@@ -48,7 +48,7 @@ public class DelaunayTriangulation{
     addToAEL(e2, AEL, DT);
     addToAEL(e3, AEL, DT);
     System.out.println(AEL.size());
-    int i = 2;
+    int i = 10;
     while(!AEL.isEmpty() && i>0){ //<>//
       for(LineSegment l : AEL) System.out.println(l);
       i--;
@@ -63,8 +63,11 @@ public class DelaunayTriangulation{
         e2 = new LineSegment(oe.x, p);
         e3 = new LineSegment(p, oe.y);
         
-        if(!AEL.contains(e2) && !DT.contains(e2)) addToAEL(e2, AEL, DT);
-        if(!AEL.contains(e3) && !DT.contains(e3)) addToAEL(e3, AEL, DT);
+        if(!AEL.contains(e2) && !DT.contains(e2) && !AEL.contains(e3) && !DT.contains(e3)){
+          addToAEL(e2, AEL, DT);
+          addToAEL(e3, AEL, DT);
+        }
+        //if(!AEL.contains(e3) && !DT.contains(e3)) addToAEL(e3, AEL, DT);
       }
       
       DT.add(oe);

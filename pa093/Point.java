@@ -82,5 +82,13 @@ public static final int POINT_RADIUS = 5;
   public static float dot(Point p, Point q) {
     return p.x*q.x + p.y*q.y;
   }
+  
+  public static float cross(Point p1, Point p2, Point p3){
+    float u1 = p2.x - p1.x;
+    float v1 = p2.y - p1.y;
+    float u2 = p3.x - p1.x;
+    float v2 = p3.y - p1.y;
+    return (u1 * v2) - (v1 * u2); 
+  }
 
 }

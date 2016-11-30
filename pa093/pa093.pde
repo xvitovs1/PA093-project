@@ -15,7 +15,7 @@ Point dragPoint = null;
 static final int RANDOM_POINTS_NUM = 10;
 
 void setup() {
-  size(1200, 900);
+  size(1200, 800);
   background(255);
   points = new ArrayList<Point>();
   polygon = new ArrayList<LineSegment>();
@@ -196,7 +196,7 @@ void keyPressed() {
                 break;
     case('t') : drawTriangulation();
                 break;
-    case('l') : //drawDelaunayTriangulation();
+    case('l') : drawDelaunayTriangulation();
                 break;
     case('k') : drawKdTree();
                 break;
