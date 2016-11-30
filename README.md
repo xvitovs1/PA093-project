@@ -6,6 +6,7 @@
 * Convex hull - Graham scan
 * Triangulation
 * Kd-tree
+* Delaunay triangulation - incremental algorithm
 
 ##Modes:
 
@@ -22,3 +23,4 @@
 * `g` - Convex hull - Graham scan
 * `t` - Triangulation for convex hull or monotone polygon
 * `k` - Kd-tree
+* `l` - Delaunay triangulation
