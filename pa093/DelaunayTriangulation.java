@@ -49,18 +49,12 @@ public class DelaunayTriangulation{
     addToAEL(e, AEL, DT);
     addToAEL(e2, AEL, DT);
     addToAEL(e3, AEL, DT);
-    System.out.println(AEL.size());
-    int i = 100;
-    while(!AEL.isEmpty() && i>0){  //<>//
-      for(LineSegment l : AEL) System.out.println(l);
-      i--;
+    while(!AEL.isEmpty()){  //<>//
       e = AEL.get(0);
-      System.out.println("Got " + e);
       LineSegment oe = new LineSegment(e.y, e.x);
 
       // Find the point with smallest Delaunay distance on the left from e
       pointsOnLeft = getPointsOnLeft(oe, points);
-      for(Point pl : pointsOnLeft) System.out.println("pl" + pl);
       p = getPointWithSmallestDD(pointsOnLeft, oe);
       
       if(p != null){
@@ -74,7 +68,6 @@ public class DelaunayTriangulation{
       DT.add(oe);
       
       AEL.remove(e);
-      System.out.println(AEL.size());
     }
    
     return DT;      
@@ -94,6 +87,7 @@ public class DelaunayTriangulation{
     }
   }
   
+  // Gets point with smallest delaunay distance from line ls
   private static Point getPointWithSmallestDD(ArrayList<Point> points, LineSegment ls){
     Point p = null;
     float distance = Float.MAX_VALUE;
@@ -109,11 +103,12 @@ public class DelaunayTriangulation{
     return p;
   }
   
+  // Gets all points that are on the left side of given line segment
   private static ArrayList<Point> getPointsOnLeft(LineSegment ls, ArrayList<Point> points){
     ArrayList<Point> pointsOnLeft = new ArrayList<Point>();
     for(Point cp : points){
       if(Point.getOrientation(cp, ls.x, ls.y) < 0){
-        pointsOnLeft.add(cp); //TODO check this
+        pointsOnLeft.add(cp); 
       }
     }
     return pointsOnLeft;
@@ -124,24 +119,16 @@ public class DelaunayTriangulation{
     LineSegment oe = new LineSegment(e.y, e.x);
     if(AEL.contains(oe)){
       AEL.remove(e);
-            System.out.println("removed.");
     }
     else {
       AEL.add(e);
-              System.out.println("added.");
     }
     
     DT.add(e);
   }
   
+  // Gets center of circumcircle of given line segment and point
   private static Point getCircumcircleCenter(Point p, LineSegment ls){
-    /*Point p1 = ls.x;
-    Point p2 = ls.y;
-    Point midDiff = new Point((p2.x-p.x)/2, (p2.y-p.y)/2);
-    Point u = new Point(p.y-p1.y, p1.x-p.x);
-    Point v = new Point(p2.x-p1.x, p2.y-p1.x);
-    float t = Point.dot(midDiff, v)/Point.dot(u, v);
-    return new Point(t*u.x + (p.x+p1.x)/2, t*u.y + (p.y+p1.y)/2);*/
     Point p2 = ls.x;
     Point p3 = ls.y;
     float cp = Point.cross(p, p2, p3);
