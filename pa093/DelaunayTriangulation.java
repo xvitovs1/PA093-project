@@ -34,16 +34,17 @@ public class DelaunayTriangulation{
     // Find the point with smallest Delaunay distance on the left from e
     ArrayList<Point> pointsOnLeft = getPointsOnLeft(e, points);
     Point p = getPointWithSmallestDD(pointsOnLeft, e);
+    LineSegment e2 = new LineSegment(p2, p);
+    LineSegment e3 = new LineSegment(p, p1);
     
     if(p == null){
       e = new LineSegment(p2, p1);
       pointsOnLeft = getPointsOnLeft(e, points);
       p = getPointWithSmallestDD(pointsOnLeft, e);
+      e2 = new LineSegment(p, p2);
+      e3 = new LineSegment(p1, p);
     }
-    
-    LineSegment e2 = new LineSegment(p2, p);
-    LineSegment e3 = new LineSegment(p, p1);
-    
+        
     // Add e, e2, e3 to AEL
     addToAEL(e, AEL, DT);
     addToAEL(e2, AEL, DT);
@@ -56,20 +57,18 @@ public class DelaunayTriangulation{
       e = AEL.get(0);
       System.out.println("Got " + e);
       LineSegment oe = new LineSegment(e.y, e.x);
+
       // Find the point with smallest Delaunay distance on the left from e
       pointsOnLeft = getPointsOnLeft(oe, points);
-
+      for(Point pl : pointsOnLeft) System.out.println("pl" + pl);
       p = getPointWithSmallestDD(pointsOnLeft, oe);
+      
       if(p != null){
-        e2 = new LineSegment(oe.x, p);
-        e3 = new LineSegment(p, oe.y);
-        
-       /* if(!AEL.contains(e2) && !DT.contains(e2) && !AEL.contains(e3) && !DT.contains(e3)){
-          addToAEL(e2, AEL, DT);
-          addToAEL(e3, AEL, DT);
-        }*/
-        if(!AEL.contains(e2) && !DT.contains(e2) && !AEL.contains(new LineSegment(e2.y, e2.x)) && !DT.contains(new LineSegment(e2.y, e2.x)) ) addToAEL(e2, AEL, DT);
-        if(!AEL.contains(e3) && !DT.contains(e3) && !AEL.contains(new LineSegment(e3.y, e3.x)) && !DT.contains(new LineSegment(e3.y, e3.x)) ) addToAEL(e3, AEL, DT);
+        System.out.println(p);
+        e2 = new LineSegment(p, oe.x);
+        e3 = new LineSegment(oe.y, p);
+        if((!AEL.contains(e2) && !AEL.contains(new LineSegment(e2.y, e2.x))) && (!DT.contains(e2) && !DT.contains(new LineSegment(e2.y, e2.x)) )) addToAEL(e2, AEL, DT);
+        if((!AEL.contains(e3) && !AEL.contains(new LineSegment(e3.y, e3.x))) && (!DT.contains(e3) && !DT.contains(new LineSegment(e3.y, e3.x)) )) addToAEL(e3, AEL, DT);
       }
       
       DT.add(oe);
@@ -77,7 +76,7 @@ public class DelaunayTriangulation{
       AEL.remove(e);
       System.out.println(AEL.size());
     }
-    
+   
     return DT;      
   }
   
@@ -113,7 +112,7 @@ public class DelaunayTriangulation{
   private static ArrayList<Point> getPointsOnLeft(LineSegment ls, ArrayList<Point> points){
     ArrayList<Point> pointsOnLeft = new ArrayList<Point>();
     for(Point cp : points){
-      if(Point.getOrientation(cp, ls.x, ls.y) > 0){
+      if(Point.getOrientation(cp, ls.x, ls.y) < 0){
         pointsOnLeft.add(cp); //TODO check this
       }
     }

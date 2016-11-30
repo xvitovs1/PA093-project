@@ -33,6 +33,8 @@ void mousePressed() {
         dragPoint = p;
       }
     }
+  } else if(!addPoints && !removePoints && !createPolygon){
+    text("[" + mouseX + ","+ mouseY+ "]",mouseX,mouseY); //TODO remove this later, for debugging only
   }
 }
 
