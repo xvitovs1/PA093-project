@@ -133,14 +133,29 @@ public class DelaunayTriangulation{
   }
   
   private static Point getCircumcircleCenter(Point p, LineSegment ls){
-    Point p1 = ls.x;
+    /*Point p1 = ls.x;
     Point p2 = ls.y;
     Point midDiff = new Point((p2.x-p.x)/2, (p2.y-p.y)/2);
     Point u = new Point(p.y-p1.y, p1.x-p.x);
     Point v = new Point(p2.x-p1.x, p2.y-p1.x);
     float t = Point.dot(midDiff, v)/Point.dot(u, v);
-    return new Point(t*u.x + (p.x+p1.x)/2, t*u.y + (p.y+p1.y)/2);
+    return new Point(t*u.x + (p.x+p1.x)/2, t*u.y + (p.y+p1.y)/2);*/
+    Point p2 = ls.x;
+    Point p3 = ls.y;
+    float cp = Point.cross(p, p2, p3);
+    if (cp != 0) {
+      float pSq = (p.x * p.x)+ (p.y * p.y);
+      float p2Sq = (p2.x * p2.x)+ (p2.y * p2.y);
+      float p3Sq = (p3.x * p3.x)+ (p3.y * p3.y);
+      float num = pSq * (p2.y -p3.y) + p2Sq *(p3.y-p.y) + p3Sq *(p.y-p2.y); 
+      float cx= num / (2.0f * cp);
+      num = pSq *(p3.x -p2.x) + p2Sq*(p.x-p3.x) + p3Sq*(p2.x -p.x);
+      float cy= num / (2.0f * cp);
+      return new Point(cx, cy); 
+    }
+    return p;
   }
+  
   
   
   
