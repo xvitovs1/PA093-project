@@ -3,7 +3,7 @@ import g4p_controls.*;
 GButton btnHelp;
 GWindow window;
 
-boolean addPoints; // adding points mode
+boolean addPoints ; // adding points mode
 boolean removePoints; // removing points mode
 boolean movePoint; // moving points mode
 boolean createPolygon; // creating polygon mode
@@ -33,13 +33,11 @@ void mousePressed() {
         dragPoint = p;
       }
     }
-  } else if(!addPoints && !removePoints && !createPolygon){
-    text("[" + mouseX + ","+ mouseY+ "]",mouseX,mouseY); //TODO remove this later, for debugging only
-  }
+  } 
 }
 
 void mouseClicked() {
- 
+ text("[" + mouseX + ","+ mouseY+ "]",mouseX,mouseY); //TODO remove this later, for debugging only
     if(addPoints) {
       addPoint(new Point(mouseX, mouseY));
     }
@@ -58,6 +56,9 @@ void mouseClicked() {
       if(points.size() > 0)
         addSegment(points.get(points.size() - 1), p);
       addPoint(p);
+    }
+    else if(!movePoint){
+      text("[" + mouseX + ","+ mouseY+ "]",mouseX,mouseY); //TODO remove this later, for debugging only
     }
 }
 
@@ -188,19 +189,25 @@ void keyPressed() {
                 break;
     case('d') : setMode(false,true, false, false);
                 break;
-    case('r') : randomPoints(RANDOM_POINTS_NUM);
+    case('r') : setMode(false, false, false, false);
+                randomPoints(RANDOM_POINTS_NUM);
                 break;
     case('m') : setMode(false,false, true, false);
                 break;
-    case('h') : drawConvexHull(false);
+    case('h') : setMode(false, false, false, false);
+                drawConvexHull(false);
                 break;
-    case('g') : drawConvexHull(true);
+    case('g') : setMode(false, false, false, false);
+                drawConvexHull(true);
                 break;
-    case('t') : drawTriangulation();
+    case('t') : setMode(false, false, false, false);
+                drawTriangulation();
                 break;
-    case('l') : drawDelaunayTriangulation();
+    case('l') : setMode(false, false, false, false);
+                drawDelaunayTriangulation();
                 break;
-    case('k') : drawKdTree();
+    case('k') : setMode(false, false, false, false);
+                drawKdTree();
                 break;
   }
 
