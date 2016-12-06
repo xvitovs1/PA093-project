@@ -37,7 +37,6 @@ void mousePressed() {
 }
 
 void mouseClicked() {
- text("[" + mouseX + ","+ mouseY+ "]",mouseX,mouseY); //TODO remove this later, for debugging only
     if(addPoints) {
       addPoint(new Point(mouseX, mouseY));
     }
@@ -165,6 +164,16 @@ void drawDelaunayTriangulation(){
   }
 }
 
+// Draw Voronoi diagram
+void drawVoronoiDiagram(){
+  if(points.isEmpty()) return;
+  ArrayList<LineSegment> vd = VoronoiDiagram.createDiagram(points);
+
+  for(LineSegment l : vd){
+    line(l.x.x, l.x.y, l.y.x, l.y.y);
+  }
+}
+
 // Draw Kd tree
 void drawKdTree(){
   if(points.isEmpty()) return;
@@ -208,6 +217,9 @@ void keyPressed() {
                 break;
     case('k') : setMode(false, false, false, false);
                 drawKdTree();
+                break;
+    case('v') : setMode(false, false, false, false);
+                drawVoronoiDiagram();
                 break;
   }
 
