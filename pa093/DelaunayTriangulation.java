@@ -58,7 +58,6 @@ public class DelaunayTriangulation{
       p = getPointWithSmallestDD(pointsOnLeft, oe);
       
       if(p != null){
-        System.out.println(p);
         e2 = new LineSegment(p, oe.x);
         e3 = new LineSegment(oe.y, p);
         if((!AEL.contains(e2) && !AEL.contains(new LineSegment(e2.y, e2.x))) && (!DT.contains(e2) && !DT.contains(new LineSegment(e2.y, e2.x)) )) addToAEL(e2, AEL, DT);
