@@ -167,6 +167,7 @@ void drawDelaunayTriangulation(){
 // Draw Voronoi diagram
 void drawVoronoiDiagram(){
   if(points.isEmpty()) return;
+    
   ArrayList<LineSegment> vd = VoronoiDiagram.createDiagram(points);
 
   fill(255,0,0);

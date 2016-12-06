@@ -74,7 +74,7 @@ public class DelaunayTriangulation{
   
   // Computes delaunay distance between point p and line segment ls
   private static float delaunayDistance(LineSegment ls, Point p){
-    Point circumcenter = getCircumcircleCenter(p, ls);
+    Point circumcenter = Circumcircle.getCircumcircleCenter(p, ls);
     float r = (float)Point.distance(p, circumcenter);
     
     if((Point.getOrientation(p, ls.x, ls.y) < 0 && Point.getOrientation(circumcenter, ls.x, ls.y) > 0) 

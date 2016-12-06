@@ -1,3 +1,4 @@
+// Represents circumcircle of given line and point
 public class Circumcircle{
   
    // Gets center of circumcircle of given line segment and point
