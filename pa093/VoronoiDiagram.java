@@ -14,7 +14,7 @@ public class VoronoiDiagram{
     
     for(Triangle t : triangles){
       Point center = null;
-      if(t.a.x.equals t.c.x){
+      if(t.a.x.equals(t.c.x)){
         center = Circumcircle.getCircumcircleCenter(t.c.y,t.a);
       }
       else{
