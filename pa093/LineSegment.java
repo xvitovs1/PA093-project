@@ -9,7 +9,8 @@ public class LineSegment {
      this.y = y;
    }
    
-  public static boolean isOnLine(Point p, LineSegment l){
+   //Returns true if point p lies on the line segment l
+   public static boolean isOnLine(Point p, LineSegment l){
     float dxc = p.x - l.x.x;
     float dyc = p.y - l.x.y;
     
@@ -22,6 +23,11 @@ public class LineSegment {
       return false;
       
     return true;
+  }
+  
+  // Returns middle of the line segment
+  public Point getMiddle(){
+    return new Point((this.x.x+this.y.x)/2, (this.x.y+this.y.y)/2);
   }
   
   @Override

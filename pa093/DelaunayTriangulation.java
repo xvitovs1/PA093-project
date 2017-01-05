@@ -64,7 +64,7 @@ public class DelaunayTriangulation{
         if((!AEL.contains(e3) && !AEL.contains(new LineSegment(e3.y, e3.x))) && (!DT.contains(e3) && !DT.contains(new LineSegment(e3.y, e3.x)) )) addToAEL(e3, AEL, DT);
       }
       
-      DT.add(oe);
+      //DT.add(oe);
       
       AEL.remove(e);
     }
