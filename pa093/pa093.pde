@@ -170,11 +170,11 @@ void drawVoronoiDiagram(){
     
   ArrayList<LineSegment> vd = VoronoiDiagram.createDiagram(points);
 
-  fill(255,0,0);
+  stroke(255,0,0);
   for(LineSegment l : vd){
-    line(l.x.x, l.x.y, l.y.x, l.y.y);
+      line(l.x.x, l.x.y, l.y.x, l.y.y);
   }
-  fill(255,0,0);
+  stroke(0);
 }
 
 // Draw Kd tree

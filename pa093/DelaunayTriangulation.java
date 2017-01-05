@@ -49,7 +49,7 @@ public class DelaunayTriangulation{
     addToAEL(e, AEL, DT);
     addToAEL(e2, AEL, DT);
     addToAEL(e3, AEL, DT);
-    while(!AEL.isEmpty()){  //<>//
+    while(!AEL.isEmpty()){ //<>//
       e = AEL.get(0);
       LineSegment oe = new LineSegment(e.y, e.x);
 

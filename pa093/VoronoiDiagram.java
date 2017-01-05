@@ -10,8 +10,7 @@ public class VoronoiDiagram{
     ArrayList<LineSegment> dt = DelaunayTriangulation.triangulate(points);
     ArrayList<Triangle> triangles = getTriangles(dt);
     
-    ArrayList<Point> circumCenters = new ArrayList<Point>();
-    
+    System.out.println("Size " + triangles.size());
     for(Triangle t : triangles){
       Point center = null;
       if(t.a.x.equals(t.c.x)){
@@ -20,8 +19,23 @@ public class VoronoiDiagram{
       else{
         center = Circumcircle.getCircumcircleCenter(t.c.x,t.a);
       }
-
-      if(!circumCenters.contains(center)) circumCenters.add(center);
+      
+      for(Triangle candidateT : triangles){
+        if(candidateT.equals(t)) continue;
+        
+        Point center2;
+        if(candidateT.isAdjacent(t)){
+          if(candidateT.a.x.equals(candidateT.c.x)){
+            center2 = Circumcircle.getCircumcircleCenter(candidateT.c.y,candidateT.a);
+          }
+          else{
+            center2 = Circumcircle.getCircumcircleCenter(candidateT.c.x,candidateT.a);
+          }
+          
+          LineSegment l = new LineSegment(center, center2);
+          if(!vd.contains(l)) vd.add(l);
+        }
+      }
     }
 
     return vd;
@@ -31,12 +45,15 @@ public class VoronoiDiagram{
     ArrayList<Triangle> triangles = new ArrayList<Triangle>();
     
     for(int i = 0; i < lines.size(); i++){
+      System.out.println("i " + lines.get(i).toString());
       LineSegment firstCandidate = null;
-      for(int j = i; j < lines.size(); j++){
+      for(int j = i + 1; j < lines.size(); j++){
+        System.out.println("j " + lines.get(j).toString());
         if(firstCandidate == null){
           if((lines.get(i).x.equals(lines.get(j).x)) || (lines.get(i).x.equals(lines.get(j).y)) ||
              (lines.get(i).y.equals(lines.get(j).y)) || (lines.get(i).y.equals(lines.get(j).x))){
             firstCandidate = lines.get(j);
+            System.out.println("first c " + firstCandidate.toString());
           }
         } else{
           if((lines.get(i).x.equals(firstCandidate.x) && firstCandidate.y.equals(lines.get(j).x)
@@ -68,6 +85,4 @@ public class VoronoiDiagram{
     
     return triangles;
   }
-
-
 }
