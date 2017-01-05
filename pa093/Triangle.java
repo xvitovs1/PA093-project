@@ -7,8 +7,15 @@ public class Triangle{
   
   public Triangle(LineSegment a, LineSegment b, LineSegment c){
     this.a = a;
-    this.b = b;
-    this.c = c;
+    
+    if(a.x.equals(c.x) || a.x.equals(c.y)){
+      this.b = b;
+      this.c = c;
+    }
+    else{
+      this.b = c;
+      this.c = b;
+    }
   }
   
   @Override
@@ -34,10 +41,27 @@ public class Triangle{
       return hash;
   }
   
-  public boolean isAdjacent(Triangle t){   
-    if(this.a == t.a || this.a == t.b || this.a == t.c || 
-    this.b == t.a || this.b == t.b || this.b == t.c || 
-    this.c == t.a || this.c == t.b || this.c == t.c){
+  // Returns true if triangle is adjacent to triangle t on the side a
+  public boolean isAdjacentA(Triangle t){   
+    if(this.a == t.a || this.a == t.b || this.a == t.c){
+      return true;
+    }
+    
+    return false;
+  }
+  
+  // Returns true if triangle is adjacent to triangle t on the side b
+  public boolean isAdjacentB(Triangle t){   
+    if(this.b == t.a || this.b == t.b || this.b == t.c){
+      return true;
+    }
+    
+    return false;
+  }
+  
+  // Returns true if triangle is adjacent to triangle t on the side c
+  public boolean isAdjacentC(Triangle t){   
+    if(this.c == t.a || this.c == t.b || this.c == t.c){
       return true;
     }
     

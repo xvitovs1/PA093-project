@@ -12,6 +12,9 @@ public class VoronoiDiagram{
     
     System.out.println("Size " + triangles.size());
     for(Triangle t : triangles){
+      boolean adjacentA = false;
+      boolean adjacentB = false;
+      boolean adjacentC = false;
       Point center = null;
       if(t.a.x.equals(t.c.x)){
         center = Circumcircle.getCircumcircleCenter(t.c.y,t.a);
@@ -24,7 +27,7 @@ public class VoronoiDiagram{
         if(candidateT.equals(t)) continue;
         
         Point center2;
-        if(candidateT.isAdjacent(t)){
+        if(candidateT.isAdjacentA(t) || candidateT.isAdjacentB(t) || candidateT.isAdjacentC(t)){
           if(candidateT.a.x.equals(candidateT.c.x)){
             center2 = Circumcircle.getCircumcircleCenter(candidateT.c.y,candidateT.a);
           }
@@ -34,6 +37,13 @@ public class VoronoiDiagram{
           
           LineSegment l = new LineSegment(center, center2);
           if(!vd.contains(l)) vd.add(l);
+        }
+        
+        if(!adjacentA){
+        }
+        else if(!adjacentB){
+        }
+        else if(!adjacentC){
         }
       }
     }
