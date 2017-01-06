@@ -18,6 +18,7 @@ public class Triangle{
     }
   }
   
+  // Gets area of a triangle A(x1,y1), B(x2,y2), C(x3,y3)
   private float getArea(float x1, float y1, float x2, float y2, float x3, float y3)
   {
      return Math.abs((x1*(y2-y3) + x2*(y3-y1)+ x3*(y1-y2))/2f);
@@ -49,7 +50,6 @@ public class Triangle{
     float area3 = getArea (a.x, a.y, b.x, b.y, p.x, p.y);
      
     // Check if sum of A1, A2 and A3 equals A
-    float s = area1 + area2 + area3;
     return (mainArea == area1 + area2 + area3 || Math.abs(mainArea - area1 - area2 - area3) < 0.02);
   }
  

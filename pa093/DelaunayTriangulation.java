@@ -4,10 +4,8 @@ import java.util.Random;
 import processing.core.PVector;
 
 public class DelaunayTriangulation{
-  
   // Delaunay triangulation
   public static ArrayList<LineSegment> triangulate(ArrayList<Point> points){
-    
     ArrayList<LineSegment> DT = new ArrayList<LineSegment>();
     ArrayList<LineSegment> AEL = new ArrayList<LineSegment>();
     
@@ -49,9 +47,9 @@ public class DelaunayTriangulation{
     addToAEL(e, AEL, DT);
     addToAEL(e2, AEL, DT);
     addToAEL(e3, AEL, DT);
-    while(!AEL.isEmpty()){ //<>//
+    while(!AEL.isEmpty()){ 
       e = AEL.get(0);
-      LineSegment oe = new LineSegment(e.y, e.x);
+      LineSegment oe = new LineSegment(e.y, e.x); //<>//
 
       // Find the point with smallest Delaunay distance on the left from e
       pointsOnLeft = getPointsOnLeft(oe, points);
@@ -125,5 +123,4 @@ public class DelaunayTriangulation{
     
     DT.add(e);
   }
-   
 }
