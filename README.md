@@ -7,6 +7,7 @@
 * Triangulation
 * Kd-tree
 * Delaunay triangulation - incremental algorithm
+* Voronoi diagram - constructed from Delaunay triangulation
 
 ##Modes:
 
@@ -24,3 +25,4 @@
 * `t` - Triangulation for convex hull or monotone polygon
 * `k` - Kd-tree
 * `l` - Delaunay triangulation
+* `v` - Voronoi diagram
