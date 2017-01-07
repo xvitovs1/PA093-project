@@ -1,7 +1,7 @@
 import java.util.Comparator;
 
-public class PointsByAngleComparator implements Comparator<Point> {
-  
+// Comparator for comparing points by angle they form
+public class PointsByAngleComparator implements Comparator<Point> { 
   private Point basePoint;
   private Point x;
   

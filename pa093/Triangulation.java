@@ -86,7 +86,7 @@ public class Triangulation{
     return polygon;
   }
   
-    public static ArrayList<LineSegment> triangulate(ArrayList<Point> points){
+  public static ArrayList<LineSegment> triangulate(ArrayList<Point> points){
     // Get polygon
     ArrayList<LineSegment> polygon = new ArrayList<LineSegment>();
     for(int i = 1; i < points.size(); i++){
@@ -97,6 +97,7 @@ public class Triangulation{
     return triangulate(points, polygon);
   }
   
+  // Split the points to two queues
   private static void fillQueues(Point highestPoint, Point lowestPoint, ArrayList<Point> queueLeft, ArrayList<Point> queueRight, ArrayList<Point> points){
     
     ArrayList<Point> chain1 = new ArrayList<Point>();
@@ -165,6 +166,7 @@ public class Triangulation{
     }
   }
   
+  // Returns true if point p is on the right side of ab
   private static boolean pIsOnRight(Point p, Point a, Point b){
     float d = ((p.x-a.x)*(b.y-a.y)) - ((p.y-a.y)*(b.x-a.x));
     float left = (((a.x - 1)-a.x)*(b.y-a.y)) - ((a.y-a.y)*(b.x-a.x));

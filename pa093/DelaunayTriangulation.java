@@ -9,7 +9,7 @@ public class DelaunayTriangulation{
     ArrayList<LineSegment> DT = new ArrayList<LineSegment>();
     ArrayList<LineSegment> AEL = new ArrayList<LineSegment>();
     
-    // get random point from points
+    // Get random point from points
     Random randomGenerator = new Random();
     int randIndex = randomGenerator.nextInt(points.size());
     Point p1 = points.get(randIndex);

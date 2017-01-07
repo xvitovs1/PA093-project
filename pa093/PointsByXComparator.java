@@ -1,5 +1,6 @@
 import java.util.Comparator;
 
+// Comparator for comparing points by x coordinate
 public class PointsByXComparator implements Comparator<Point> {
   
    @Override

@@ -1,13 +1,14 @@
 import processing.core.PVector;
 import java.util.ArrayList;
 
+// Represents a point with coordinates x, y
 public class Point {
   float x;
   float y;
-  float radius;
+  float radius; // radius of point that will be drawn
   
   // Point radius
-public static final int POINT_RADIUS = 5;
+  public static final int POINT_RADIUS = 5;
   
   Point(float x, float y) {
     this.x = x;
@@ -38,7 +39,7 @@ public static final int POINT_RADIUS = 5;
       return hash;
   }
   
-  // Check if given point is inside our ellipse
+  // Check if given point is inside an ellipse
   boolean contains(float x, float y) {
     if((Math.pow((x - this.x),2) + Math.pow((y - this.y),2)) <= Math.pow(this.radius,2)) {
       return true;
@@ -46,6 +47,7 @@ public static final int POINT_RADIUS = 5;
     return false;
   }
   
+  // Get angle between vectors
   public static float getAngle(Point middlePoint, Point p2, Point p3){
     
     PVector v1 = getVector(middlePoint, p2);
@@ -53,13 +55,8 @@ public static final int POINT_RADIUS = 5;
     return PVector.angleBetween(v1,v2);
   }
   
-  /**
-  * Gets orientation of three points.
-  * @param p1 point 1
-  * @param p2 point 2
-  * @param p2 point 3
-  * @return 0 if the points lie on the same line, >0 if the points are counter-clockwise and <0 if the points are clockwise
-  */
+  //Gets orientation of three points.
+  // Returns 0 if the points lie on the same line, >0 if the points are counter-clockwise and <0 if the points are clockwise
   public static float getOrientation(Point p1, Point p2, Point p3){
     return (p2.x-p1.x)*(p3.y-p1.y) - (p2.y-p1.y)*(p3.x-p1.x);
   }
@@ -68,6 +65,7 @@ public static final int POINT_RADIUS = 5;
     return "[" + this.x + "," + this.y + "]";
   }
   
+  // Gets vector defined by points a and b
   private static PVector getVector(Point a, Point b){
     return new PVector(b.x - a.x, b.y - a.y);
   }
@@ -79,10 +77,12 @@ public static final int POINT_RADIUS = 5;
     return Math.sqrt(d1*d1+d2*d2);
   }
   
+  // Returns dit product
   public static float dot(Point p, Point q) {
     return p.x*q.x + p.y*q.y;
   }
   
+  // Returns cross product
   public static float cross(Point p1, Point p2, Point p3){
     float u1 = p2.x - p1.x;
     float v1 = p2.y - p1.y;

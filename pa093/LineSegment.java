@@ -1,15 +1,16 @@
 import java.util.ArrayList;
 
+// Represents a line segment defind by two ending points x, y
 public class LineSegment {
-  Point x;
-  Point y;
+   Point x;
+   Point y;
   
    public LineSegment(Point x, Point y){
-     this.x = x;
-     this.y = y;
+    this.x = x;
+    this.y = y;
    }
    
-   //Returns true if point p lies on the line segment l
+   // Returns true if point p lies on the line segment l
    public static boolean isOnLine(Point p, LineSegment l){
     float dxc = p.x - l.x.x;
     float dyc = p.y - l.x.y;

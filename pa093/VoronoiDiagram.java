@@ -14,6 +14,7 @@ public class VoronoiDiagram{
     ArrayList<LineSegment> dt = DelaunayTriangulation.triangulate(points);
     ArrayList<Triangle> triangles = getTriangles(dt);
     
+    // Get circumcircle centers of all triangles
     for(Triangle t : triangles){
       Point center = null;
       if(t.a.x.equals(t.c.x)){
@@ -23,6 +24,7 @@ public class VoronoiDiagram{
         center = Circumcircle.getCircumcircleCenter(t.c.x,t.a);
       }
       
+      // Join circumcircle center with adjacent triangles
       for(Triangle candidateT : triangles){
         if(candidateT.equals(t)) continue;
         
@@ -44,16 +46,7 @@ public class VoronoiDiagram{
     return vd;
   }
   
-  private static Point getPointOnLine(LineSegment l, int distance) {
-    float vectorX = l.y.x - l.x.x;
-    float vectorY = l.y.y - l.x.y;
-    double magnitude = Math.sqrt(vectorX * vectorX + vectorY * vectorY);
-    vectorX /= magnitude;
-    vectorY /= magnitude;
-    return new Point((float)((l.x.x + vectorX * (magnitude + distance)) + 0.5f),
-    (float)((l.x.y + vectorY * (magnitude + distance)) + 0.5f));
-  }
-  
+  // Gets triangles from list of line segments
   private static ArrayList<Triangle> getTriangles(ArrayList<LineSegment> lines){
     ArrayList<Triangle> triangles = new ArrayList<Triangle>();
 
@@ -107,6 +100,7 @@ public class VoronoiDiagram{
     return triangles;
   }
   
+  // Adds auxiliary triangle needed for nice drawing of voronoi diagram
   private static void addAuxiliaryTriangle(ArrayList<Point> points){
     Point a = new Point(-auxSize, -auxSize);
     Point b = new Point(auxSize, -auxSize);

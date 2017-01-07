@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
+// Represents a kd-tree
 public class KdTree{
+  // Build the kd-tree from list of points
   public static KdNode buildTree(ArrayList<Point> points, int depth){
     if(points.size() == 0){
       return null;
@@ -13,7 +15,7 @@ public class KdTree{
       ArrayList<Point> p1 = new ArrayList<Point>();
       ArrayList<Point> p2 = new ArrayList<Point>();
       Point l;
-      // Split the points.
+      // Split the points
       if(depth % 2 == 0){
         Collections.sort(points, new PointsByXComparator());
         l = points.get(points.size() / 2);
@@ -30,7 +32,7 @@ public class KdTree{
     }
   }
   
-  // Splits the points to two lists according to the given median.
+  // Splits the points to two lists according to the given median
   private static void splitPoints(Point median, ArrayList<Point> points, ArrayList<Point> p1, ArrayList<Point> p2){
     int i = 0;
     while(!((points.get(i)).equals(median))){
@@ -46,7 +48,7 @@ public class KdTree{
     }
   }
   
-  // Gets line for drawing kd-tree
+  // Gets lines for drawing a kd-tree
   public static ArrayList<LineSegment> getLines(KdNode root, float bottom, float maxRight){
     return getLines(root, bottom, 0, 0, maxRight);
   }
