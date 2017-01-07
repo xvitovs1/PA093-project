@@ -38,13 +38,16 @@ void mousePressed() {
 
 void mouseClicked() {
     if(addPoints) {
+      // Mode for adding points
       addPoint(new Point(mouseX, mouseY));
     }
     else if (removePoints) {
+      // Mode for removing points
       removePoint(mouseX, mouseY);
       redrawPoints();
     }
     else if(createPolygon) {
+      // Mode for creating a polygon
       Point p = new Point(mouseX, mouseY);
       if (mouseButton == RIGHT) {
         setMode(false, false, false, false);
@@ -113,6 +116,7 @@ void randomPoints(int count) {
   }
 }
 
+// Drax convex hull - gift wrapping or graham scan
 void drawConvexHull(boolean useGrahamScan){
   // Get the convex hull
   if(points.isEmpty()) return;
@@ -120,8 +124,10 @@ void drawConvexHull(boolean useGrahamScan){
   ArrayList<Point> convexHull;
   
   if(useGrahamScan){
+    // Use Graham scan
     convexHull= ConvexHull.grahamScan(points);
   } else{
+    // Use gift wrapping
     convexHull= ConvexHull.giftWrapping(points);
   }
   
@@ -142,10 +148,12 @@ void drawTriangulation(){
   if(points.isEmpty()) return;
   ArrayList<LineSegment> triangulation;
   if(polygon.isEmpty()) {
+    // Triangulation on convex hull
     ArrayList<Point> convexHull= ConvexHull.giftWrapping(points);
     triangulation = Triangulation.triangulate(convexHull);
   }
   else{
+    // Triangulation on given polygon
     triangulation = Triangulation.triangulate(points, polygon);
   }
 
@@ -228,6 +236,7 @@ void keyPressed() {
 
 }
 
+// Set mode
 void setMode(boolean add, boolean remove, boolean move, boolean polygon){
   addPoints = add;
   removePoints = remove;
