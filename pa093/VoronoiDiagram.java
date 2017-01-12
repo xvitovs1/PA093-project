@@ -57,47 +57,56 @@ public class VoronoiDiagram{
              (lines.get(i).y.equals(lines.get(j).y)) || (lines.get(i).y.equals(lines.get(j).x))){
             for(int k = 0; k < lines.size(); k++){
               if(lines.get(j).equals(lines.get(k)) || lines.get(j).equals(lines.get(i))) continue;
-              if((lines.get(i).x.equals(lines.get(j).x) && lines.get(j).y.equals(lines.get(k).x)
-              && lines.get(i).y.equals(lines.get(k).y)) 
-              || (lines.get(i).x.equals(lines.get(j).x) && lines.get(j).y.equals(lines.get(k).y)
-              && lines.get(i).y.equals(lines.get(k).x)) 
-              || (lines.get(i).x.equals(lines.get(j).y) && lines.get(j).x.equals(lines.get(k).x)
-              && lines.get(i).y.equals(lines.get(k).y)) 
-              || (lines.get(i).x.equals(lines.get(j).y) && lines.get(j).x.equals(lines.get(k).y)
-              && lines.get(i).y.equals(lines.get(k).x))){
+              if(isTriangleABC(lines.get(i), lines.get(j), lines.get(k))){
                 Triangle t = new Triangle(lines.get(i), lines.get(j), lines.get(k));
-                if(!triangles.contains(t)){
-                  triangles.add(t);
-                  break;
-                }else{
-                  continue;
-                }
+                if(triangles.contains(t)) continue;
+                triangles.add(t);
+                break;
               }
                 
-             if((lines.get(i).y.equals(lines.get(j).x) && lines.get(j).y.equals(lines.get(k).x)
-                && lines.get(i).x.equals(lines.get(k).y)) 
-                || (lines.get(i).y.equals(lines.get(j).x) && lines.get(j).y.equals(lines.get(k).y)
-                && lines.get(i).x.equals(lines.get(k).x)) 
-                || (lines.get(i).y.equals(lines.get(j).y) && lines.get(j).x.equals(lines.get(k).x)
-                && lines.get(i).x.equals(lines.get(k).y)) 
-                || (lines.get(i).y.equals(lines.get(j).y) && lines.get(j).x.equals(lines.get(k).y)
-                && lines.get(i).x.equals(lines.get(k).x))){
+             if(isTriangleACB(lines.get(i), lines.get(j),lines.get(k))){
                   Triangle t = new Triangle(lines.get(i), lines.get(k), lines.get(j));
-                  if(!triangles.contains(t)){
-                    triangles.add(t);
-                    break;
-                  }else{
-                    continue;
-                  }
-            }
-          }
+                  if(triangles.contains(t)) continue;
+                  triangles.add(t);
+                  break;
+              }
+           }
         }
       }      
     }       
   }
-    
-    
+       
     return triangles;
+  }
+  
+  // Check if the given lines form a triangle ABC
+  private static boolean isTriangleABC(LineSegment a, LineSegment b, LineSegment c){
+    if((a.x.equals(b.x) && b.y.equals(c.x)
+              && a.y.equals(c.y)) 
+              || (a.x.equals(b.x) && b.y.equals(c.y)
+              && a.y.equals(c.x)) 
+              || (a.x.equals(b.y) && b.x.equals(c.x)
+              && a.y.equals(c.y)) 
+              || (a.x.equals(b.y) && b.x.equals(c.y)
+              && a.y.equals(c.x)))
+              return true;
+              
+    return false;
+  }
+  
+  // Check if the given lines form a triangle ACB
+  private static boolean isTriangleACB(LineSegment a, LineSegment b, LineSegment c){
+    if(a.y.equals(b.x) && b.y.equals(c.x)
+                && a.x.equals(c.y)) 
+                || (a.y.equals(b.x) && b.y.equals(c.y)
+                && a.x.equals(c.x)) 
+                || (a.y.equals(b.y) && b.x.equals(c.x)
+                && a.x.equals(c.y)) 
+                || (a.y.equals(b.y) && b.x.equals(c.y)
+                && a.x.equals(c.x))
+              return true;
+              
+    return false;
   }
   
   // Adds auxiliary triangle needed for nice drawing of voronoi diagram
