@@ -96,14 +96,14 @@ public class VoronoiDiagram{
   
   // Check if the given lines form a triangle ACB
   private static boolean isTriangleACB(LineSegment a, LineSegment b, LineSegment c){
-    if(a.y.equals(b.x) && b.y.equals(c.x)
+    if((a.y.equals(b.x) && b.y.equals(c.x)
                 && a.x.equals(c.y)) 
                 || (a.y.equals(b.x) && b.y.equals(c.y)
                 && a.x.equals(c.x)) 
                 || (a.y.equals(b.y) && b.x.equals(c.x)
                 && a.x.equals(c.y)) 
                 || (a.y.equals(b.y) && b.x.equals(c.y)
-                && a.x.equals(c.x))
+                && a.x.equals(c.x)))
               return true;
               
     return false;
