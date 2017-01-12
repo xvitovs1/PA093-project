@@ -10,12 +10,10 @@ public class VoronoiDiagram{
     ArrayList<LineSegment> vd = new ArrayList<LineSegment>();
     
     addAuxiliaryTriangle(points);
-    
-    ArrayList<LineSegment> dt = DelaunayTriangulation.triangulate(points);
-    ArrayList<Triangle> triangles = getTriangles(dt);
+    DelaunayTriangulation dt = new DelaunayTriangulation(points);
     
     // Get circumcircle centers of all triangles
-    for(Triangle t : triangles){
+    for(Triangle t : dt.triangles){
       Point center = null;
       if(t.a.x.equals(t.c.x)){
         center = Circumcircle.getCircumcircleCenter(t.c.y,t.a);
@@ -24,8 +22,9 @@ public class VoronoiDiagram{
         center = Circumcircle.getCircumcircleCenter(t.c.x,t.a);
       }
       
+      
       // Join circumcircle center with adjacent triangles
-      for(Triangle candidateT : triangles){
+      for(Triangle candidateT : dt.triangles){
         if(candidateT.equals(t)) continue;
         
         Point center2;
@@ -36,13 +35,19 @@ public class VoronoiDiagram{
           else{
             center2 = Circumcircle.getCircumcircleCenter(candidateT.c.x,candidateT.a);
           }
+         
           
           LineSegment l = new LineSegment(center, center2);
           if(!vd.contains(l)) vd.add(l);
         }
       }
     }
-
+  
+    // Remove auxiliary triangle
+    points.remove(points.size() - 1);
+    points.remove(points.size() - 1);
+    points.remove(points.size() - 1);
+    
     return vd;
   }
   

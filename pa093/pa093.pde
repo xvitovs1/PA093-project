@@ -165,9 +165,9 @@ void drawTriangulation(){
 // Draw Delaunay triangulation
 void drawDelaunayTriangulation(){
   if(points.isEmpty()) return;
-  ArrayList<LineSegment> triangulation = DelaunayTriangulation.triangulate(points);
+  DelaunayTriangulation dt = new DelaunayTriangulation(points);
 
-  for(LineSegment l : triangulation){
+  for(LineSegment l : dt.DT){
     line(l.x.x, l.x.y, l.y.x, l.y.y);
   }
 }

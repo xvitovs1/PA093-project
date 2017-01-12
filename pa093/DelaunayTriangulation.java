@@ -4,9 +4,14 @@ import java.util.Random;
 import processing.core.PVector;
 
 public class DelaunayTriangulation{
-  // Delaunay triangulation
-  public static ArrayList<LineSegment> triangulate(ArrayList<Point> points){
-    ArrayList<LineSegment> DT = new ArrayList<LineSegment>();
+  public ArrayList<LineSegment> DT = new ArrayList<LineSegment>();
+  public ArrayList<Triangle> triangles = new ArrayList<Triangle>();
+  
+  public DelaunayTriangulation(ArrayList<Point> points){
+    triangulate(points);
+  }
+    
+  private ArrayList<Triangle> triangulate(ArrayList<Point> points){
     ArrayList<LineSegment> AEL = new ArrayList<LineSegment>();
     
     // Get random point from points
@@ -44,12 +49,13 @@ public class DelaunayTriangulation{
     }
         
     // Add e, e2, e3 to AEL
-    addToAEL(e, AEL, DT);
+    addToAEL(e, AEL, DT); //<>//
     addToAEL(e2, AEL, DT);
     addToAEL(e3, AEL, DT);
+    triangles.add(new Triangle(e, e2, e3));
     while(!AEL.isEmpty()){ 
       e = AEL.get(0);
-      LineSegment oe = new LineSegment(e.y, e.x); //<>//
+      LineSegment oe = new LineSegment(e.y, e.x);
 
       // Find the point with smallest Delaunay distance on the left from e
       pointsOnLeft = getPointsOnLeft(oe, points);
@@ -60,6 +66,7 @@ public class DelaunayTriangulation{
         e3 = new LineSegment(oe.y, p);
         if((!AEL.contains(e2) && !AEL.contains(new LineSegment(e2.y, e2.x))) && (!DT.contains(e2) && !DT.contains(new LineSegment(e2.y, e2.x)) )) addToAEL(e2, AEL, DT);
         if((!AEL.contains(e3) && !AEL.contains(new LineSegment(e3.y, e3.x))) && (!DT.contains(e3) && !DT.contains(new LineSegment(e3.y, e3.x)) )) addToAEL(e3, AEL, DT);
+        triangles.add(new Triangle(e, e2, e3));
       }
       
       //DT.add(oe);
@@ -67,11 +74,11 @@ public class DelaunayTriangulation{
       AEL.remove(e);
     }
    
-    return DT;      
+    return triangles;      
   }
   
   // Computes delaunay distance between point p and line segment ls
-  private static float delaunayDistance(LineSegment ls, Point p){
+  private float delaunayDistance(LineSegment ls, Point p){
     Point circumcenter = Circumcircle.getCircumcircleCenter(p, ls);
     float r = (float)Point.distance(p, circumcenter);
     
@@ -85,7 +92,7 @@ public class DelaunayTriangulation{
   }
   
   // Gets point with smallest delaunay distance from line ls
-  private static Point getPointWithSmallestDD(ArrayList<Point> points, LineSegment ls){
+  private Point getPointWithSmallestDD(ArrayList<Point> points, LineSegment ls){
     Point p = null;
     float distance = Float.MAX_VALUE;
     for (Point cp : points){
@@ -101,7 +108,7 @@ public class DelaunayTriangulation{
   }
   
   // Gets all points that are on the left side of given line segment
-  private static ArrayList<Point> getPointsOnLeft(LineSegment ls, ArrayList<Point> points){
+  private ArrayList<Point> getPointsOnLeft(LineSegment ls, ArrayList<Point> points){
     ArrayList<Point> pointsOnLeft = new ArrayList<Point>();
     for(Point cp : points){
       if(Point.getOrientation(cp, ls.x, ls.y) < 0){
@@ -112,7 +119,7 @@ public class DelaunayTriangulation{
   }
   
   // Adds edge to Active Edge List
-  private static void addToAEL(LineSegment e, ArrayList<LineSegment> AEL, ArrayList<LineSegment> DT){
+  private void addToAEL(LineSegment e, ArrayList<LineSegment> AEL, ArrayList<LineSegment> DT){
     LineSegment oe = new LineSegment(e.y, e.x);
     if(AEL.contains(oe)){
       AEL.remove(e);
