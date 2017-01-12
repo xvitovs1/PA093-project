@@ -267,6 +267,7 @@ synchronized public void window_draw(PApplet appc, GWinData data) {
   appc.text("t ... Triangulation", 10,220);
   appc.text("k ... Kd-tree", 10,240);
   appc.text("l ... Delaunay Triangulation", 10,260);
+  appc.text("v ... Voronoi diagram", 10,280);
 } 
  
 void createWindow() {
