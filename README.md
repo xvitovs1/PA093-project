@@ -1,6 +1,6 @@
 # PA093 Computational Geometry Project 
 
-##Implemented algorithms:
+## Implemented algorithms:
 
 * Convex hull - Gift wrapping
 * Convex hull - Graham scan
@@ -9,14 +9,14 @@
 * Delaunay triangulation - incremental algorithm
 * Voronoi diagram - constructed from Delaunay triangulation
 
-##Modes:
+## Modes:
 
 * `a` - Add points
 * `d` - Remove points
 * `m` - Move points
 * `p` - Create polygon (end polygon by right mouse click)
 
-##Commands:
+## Commands:
 
 * `r` - Generate random points
 * `c` - Clear screen
